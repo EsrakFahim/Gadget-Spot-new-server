@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const { ObjectId } = require("mongodb");
-const { getCollection } = require("../Config/DBConfig");
-const {adminVerify} = require('../AdminVerify/AdminVerify')
-const {jwtVerify} = require('../JwtVerify/JwtVerify')
+const { getCollection } = require("../../Config/DBConfig");
+const {adminVerify} = require('../../AdminVerify/AdminVerify')
+const {jwtVerify} = require('../../JwtVerify/JwtVerify')
 
 // coupon code post to DB
 router.post(

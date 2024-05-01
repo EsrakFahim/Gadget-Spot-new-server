@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const { ObjectId } = require("mongodb");
-const { getCollection } = require("../Config/DBConfig");
-const { jwtVerify } = require("../JwtVerify/JwtVerify");
-const { adminVerify } = require("../AdminVerify/AdminVerify");
+const { getCollection } = require("../../Config/DBConfig");
+const { jwtVerify } = require("../../JwtVerify/JwtVerify");
+const { adminVerify } = require("../../AdminVerify/AdminVerify");
 
 // send all product to admin panel
 router.get("/get", jwtVerify, adminVerify, async (req, res) => {

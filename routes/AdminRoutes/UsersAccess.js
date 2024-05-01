@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { getCollection } = require("../Config/DBConfig");
-const {jwtVerify} = require('../JwtVerify/JwtVerify');
-const {adminVerify} = require('../AdminVerify/AdminVerify');
+const { getCollection } = require("../../Config/DBConfig");
+const {jwtVerify} = require('../../JwtVerify/JwtVerify');
+const {adminVerify} = require('../../AdminVerify/AdminVerify');
 
 // all user data send to frontend
 router.get("/data", jwtVerify, adminVerify, async (req, res) => {

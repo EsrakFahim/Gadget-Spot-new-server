@@ -3,7 +3,8 @@ const router = express.Router();
 const {getCollection} = require('../../../Config/DBConfig')
 const {jwtVerify} = require('../../../JwtVerify/JwtVerify')
 
-router.post("/:trnID",jwtVerify, async (req, res) => {
+router.post("/:trnID",/* jwtVerify, */ async (req, res) => {
+      // console.log('success url hit')
       const productCartCollection = getCollection('productsCart');
       const userOrderCollection = getCollection('Orders');
       try {
@@ -17,7 +18,7 @@ router.post("/:trnID",jwtVerify, async (req, res) => {
                   userCartProducts.paymentStatus = true; // Update paymentStatus to true
                   userCartProducts.paymentCompleteTime = new Date(); // Add new payment complete date
 
-            console.log(userCartProducts)
+            // console.log(userCartProducts)
             // Update paymentStatus to true and insert each document into userOrderCollection
             for (const product of userCartProducts) {
                   product.paymentStatus = true; // Update paymentStatus to true
