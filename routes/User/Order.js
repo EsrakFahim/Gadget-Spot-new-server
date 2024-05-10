@@ -4,18 +4,24 @@ const { getCollection } = require("../../Config/DBConfig");
 const { jwtVerify } = require("../../JwtVerify/JwtVerify");
 
 router.get("/", async (req, res) => {
+      // add jwt after complete this route code
       try {
             const orderCollection = getCollection("Orders");
-            const { email } = req.query;
+            const { email, days, pageNo, pageSize } = req.query; // Extract the days parameter from the query string
             const query = {
                   userEmail: email,
+                  orderDate: {
+                        $gte: new Date(
+                              new Date().setDate(new Date().getDate() - days)
+                        ), // Filter orders from the last 'days' days
+                  },
             };
             const userOrders = await orderCollection.find(query).toArray();
 
             // Use MongoDB aggregation to group user orders by tran_id and orderDate
             const groupedOrders = await orderCollection
                   .aggregate([
-                        { $match: query }, // Match documents for the given email
+                        { $match: query }, // Match documents for the given email and within the last 'days' days
                         {
                               $group: {
                                     _id: {
@@ -46,7 +52,19 @@ router.get("/", async (req, res) => {
                   (a, b) => new Date(b.orderDate) - new Date(a.orderDate)
             );
 
-            res.json(groupedOrders);
+            var orderSize =  groupedOrders.length;
+
+
+            // for pagination
+            const startIndex = (pageNo - 1) * pageSize;
+            const endIndex = pageNo * pageSize;
+
+            const currentPageProduct = groupedOrders.slice(
+                  startIndex,
+                  endIndex
+            );
+
+            res.json({currentPageProduct,orderSize:orderSize});
       } catch (error) {
             console.error("Error:", error);
             res.status(500).json({ error: "Internal Server Error" });

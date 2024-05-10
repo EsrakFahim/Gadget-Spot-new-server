@@ -27,7 +27,7 @@ router.post("/stripe", jwtVerify, async (req, res) => {
             const session = await stripe.checkout.sessions.create({
                   line_items: line_items,
                   mode: "payment",
-                  success_url: `http://localhost:3000/payment/success/${newTran_id}`,
+                  success_url: `${process.env.CLIENT_SITE_URL}/payment/success/${newTran_id}`,
             });
 
             res.json({ id: session.id });

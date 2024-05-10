@@ -31,7 +31,7 @@ router.post("/:trnID",/* jwtVerify, */ async (req, res) => {
                   await productCartCollection.deleteMany(query);
             if (deleteCartData?.deletedCount > 0) {
                   res.redirect(
-                        `http://localhost:3000/payment/success/${req.params.trnID}`
+                        `${process.env.CLIENT_SITE_URL}/payment/success/${req.params.trnID}`
                   );
             } else {
                   res.status(500).send(
