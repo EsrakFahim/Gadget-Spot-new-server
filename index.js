@@ -12,6 +12,7 @@ app.use(
 );
 
 const { connectToDatabase, getCollection } = require("./Config/DBConfig");
+const paymentSuccess = require("./routes/Payment/PaymentRedirecting/Success");
 const JWT = require("./JWTTOkem/JWTTOkem");
 const appJS = require("./routes/utilities");
 const Search = require("./routes/Search/Search");
@@ -24,7 +25,6 @@ const AdminChecker = require("./routes/AdminChecker/AdminChecker");
 const AdminProductRouter = require("./routes/AdminRoutes/Products");
 const AdminCouponRouter = require("./routes/AdminRoutes/Coupon");
 const AdminUserDataRouter = require("./routes/AdminRoutes/UsersAccess");
-const paymentSuccess = require("./routes/Payment/PaymentRedirecting/Success");
 const paymentSSL = require("./routes/Payment/SSLCommerzPayment");
 const paymentStripe = require("./routes/Payment/stripePayment");
 
@@ -40,6 +40,7 @@ connectToDatabase()
             });
 
             // Use other route files as needed
+            app.use("/payment/success", paymentSuccess);
             app.use("/jwt", JWT);
             app.use("/utilities", appJS);
             app.use("/search", Search);
@@ -52,7 +53,6 @@ connectToDatabase()
             app.use("/admin/product", AdminProductRouter);
             app.use("/admin/user", AdminUserDataRouter);
             app.use("/admin/coupon", AdminCouponRouter);
-            app.use("/payment/success", paymentSuccess);
             app.use("/payment", paymentSSL);
             app.use("/payment", paymentStripe);
 
