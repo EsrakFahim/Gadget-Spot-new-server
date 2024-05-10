@@ -49,7 +49,7 @@ router.post("/SSLCommerz", jwtVerify, async (req, res) => {
             total_amount: totalPrice,
             currency: "BDT",
             tran_id: newTran_id, // use unique tran_id for each api call
-            success_url: `http://localhost:5000/payment/success/${newTran_id}`,
+            success_url: `${process.env.SERVER_SITE_URL}/payment/success/${newTran_id}`,
             fail_url: `${process.env.CLIENT_SITE_URL}`,
             cancel_url: `${process.env.CLIENT_SITE_URL}`,
             ipn_url: "http://localhost:3030/ipn",
